@@ -1,0 +1,117 @@
+\documentclass{supervision}
+\usepackage{course}
+
+% Hi Alex and others,
+%
+% Thanks for getting in touch. You're right, I'll supervise Complexity Theory
+% this term. Would either Tuesday afternoon (after 2pm) or Thursday afternoon
+% (from 2.30pm to 5.30pm) work for everyone ?
+%
+% The exercises for the first supervision are
+%
+%   Questions 1, 2, 3, 4(only a), 5
+%
+% from the first exercise sheet:
+%
+%   http://www.cl.cam.ac.uk/teaching/1213/Complexity/exercise1.pdf
+%
+% (The sheet for this year is not up yet, but it will probably be the same.
+% Don't worry about the exact type of the reduction for Q5(b) -- that will be
+% covered later in the course and is not important here. Just use the notion
+% of reduction you know from Computation Theory.)
+%
+% Please submit the answers via email by noon two days before the supervision.
+%
+% See you next week,
+% Jannis
+
+\Supervision{1}
+\begin{document}
+  \begin{questions}
+    \question In the lecture, a proof was sketched showing a $\omega(n log n)$
+      lower bound on the complexity of the sorting problem. It was also stated
+      that a similar analysis could be used to establish the same bound for the
+      Travelling Salesman Problem. Give a detailed sketch of such an argument.
+      Can you think of a way to improve the lower bound?
+
+    \question Consider the language \emph{Unary-Prime} in the one letter
+      alphabet {a} defined by:
+
+      % TODO
+
+      Show that this language is in P.
+
+    \question We say that a propositional formula $\phi$ is in 2CNF if it is a
+      conjunction of clauses, each of which contains exactly 2 literals. The
+      point of this problem is to show that the satisfiability problem for
+      formulas in 2CNF can be solved by a polynomial time algorithm.
+
+      First note that any clause with 2 literals can be written as an
+      implication in exactly two ways. For instance $(p \lor \lnot q)$ is
+      equivalent to $(q \imlies p)$ and $(\lnot p \implies \lnot q)$, and
+      $(p \lor q)$ is equivalent to $(\lnot p \implies q)$ and $(\lnot q
+      \implies p)$.
+
+      For any formula $\phi$, define the directed graph $G_\phi$ to be the
+      graph whose set of vertices is the set of all literals that occur in
+      $\phi$, and in which there is an edge from literal $x$ to literal $y$ if,
+      and only if, the implication $(x \implies y)$ is equivalent to one of the
+      clauses in $\phi$.
+
+      \begin{parts}
+        \part If $\phi$ has $n$ variables and $m$ clauses, give an upper bound
+          on the number of vertices and edges in $G_\phi$.
+
+        \part Show that $\phi$ is unsatisfiable if, and only if, there is a
+          literal $x$ such that there is a path in $G_\phi$ from $x$ to $\lnot
+          x$ and a path from $\lnot x$ to $x$.
+
+        \part Give an algorithm for verifying that a graph $G_\phi$ satisfies
+          the property stated in (b) above. What is the complexity of your
+          algorithm?
+
+        \part From (c) deduce that there is a polynomial time algorithm for
+          testing whether or not a 2CNF propositional formula is satisfiable.
+
+        \part Why does this idea not work if we have 3 literals per clause?
+
+      \end{parts}
+
+    \question A clause (i.e. a disjunction of literals) is called a \emph{Horn
+      clause}, if it contains at most one positive literal. Such a clause can
+      be written as an implication: $(x \lor (\lnot y) \lor (\lnot w) \lor
+      (\lnot z))$ is equivalent to $((y \land w \land z) \implies x))$. HORNSAT
+      is the problem of deciding whether a given Boolean expression that is a
+      conjunction of Horn clauses is satisfiable.
+
+      \begin{parts}
+        \part Show that there is a polynomial time algorithm for solving
+          HORNSAT.
+
+          \small{(Hint: if a variable is the only literal in a clause, it must
+          be set to true; if all the negative variables in a clause have been
+          set to true, then the positive one must also be set to true.
+          Continue this procedure until a contradiction is reached or a
+          satisfying truth assignment is found).}
+      \end{parts}
+
+    \question In general \emph{k-colourability} is the problem of deciding,
+      given a graph $G = (V,E)$, whether there is a colouring $\mathcal{X} : V
+      \implies {1,\ldots,k}$ of the vertices such that if $(u, v) \in E$, then
+      $\mathcal{X}(u) \neq \mathcal{X}(v)$. That is, adjacent vertices do not
+      have the same colour.
+
+      \begin{parts}
+        \part Show that there is a polynomial time algorithm for solving
+          2-colourability.
+
+        \part Show that, for each $k$, $k$-colourability is reducible to $k +
+          1$-colourability.
+
+          What can you conclude from this about the complexity of
+          4-colourability?
+
+      \end{parts}
+
+  \end{questions}
+\end{document}
