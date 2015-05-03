@@ -28,18 +28,43 @@
 \Supervision{1}
 \begin{document}
   \begin{questions}
-    \question In the lecture, a proof was sketched showing a $\omega(n log n)$
+    \question In the lectures, a proof was sketched showing a $\omega(n log n)$
       lower bound on the complexity of the sorting problem. It was also stated
       that a similar analysis could be used to establish the same bound for the
       Travelling Salesman Problem. Give a detailed sketch of such an argument.
       Can you think of a way to improve the lower bound?
 
+      \begin{solution}
+        \emph{Not sure how to adapt the proof to apply to TSP}
+      \end{solution}
+
     \question Consider the language \emph{Unary-Prime} in the one letter
-      alphabet {a} defined by:
+      alphabet $\{ a \}$ defined by:
 
-      % TODO
+      \begin{equation*}
+        {Unary-Prime} = \{ a^n | n \mbox{ is prime } \}
+      \end{equation*}
 
-      Show that this language is in P.
+      Show that this language is in $P$.
+
+      \begin{solution}
+        To show that Unary-Prime is in $P$ it is sufficient to demonstrate that
+        an algorithm of polynomial running time exists that decides Unary-Prime.
+
+        Such an algorithm is:
+
+        \begin{code}{{}}
+          // On input $\{ 0,1 \}^n$:
+
+          for k = 2, ..., n-1:
+              if k divides n, reject
+          accept
+        \end{code}
+
+        The division can be carried in time $\mathcal{O}(n^2)$ for each value
+        of k, thus since k ranges from 2 to n-1 the total running time is
+        $\mathcal{O}(n^3)$ which is polynomial in time.
+      \end{solution}
 
     \question We say that a propositional formula $\phi$ is in 2CNF if it is a
       conjunction of clauses, each of which contains exactly 2 literals. The
@@ -48,9 +73,9 @@
 
       First note that any clause with 2 literals can be written as an
       implication in exactly two ways. For instance $(p \lor \lnot q)$ is
-      equivalent to $(q \imlies p)$ and $(\lnot p \implies \lnot q)$, and
-      $(p \lor q)$ is equivalent to $(\lnot p \implies q)$ and $(\lnot q
-      \implies p)$.
+      equivalent to $(q \implies p)$ and $(\lnot p \rightarrow \lnot q)$, and
+      $(p \lor q)$ is equivalent to $(\lnot p \rightarrow q)$ and $(\lnot q
+      \rightarrow p)$.
 
       For any formula $\phi$, define the directed graph $G_\phi$ to be the
       graph whose set of vertices is the set of all literals that occur in
@@ -62,27 +87,71 @@
         \part If $\phi$ has $n$ variables and $m$ clauses, give an upper bound
           on the number of vertices and edges in $G_\phi$.
 
+          \begin{solution}
+            An upper bound on the number of vertices is $2n$ (one for each variable and its negation). The upper bound on the number of edges is $2m$ (two for each clause).
+          \end{solution}
+
         \part Show that $\phi$ is unsatisfiable if, and only if, there is a
           literal $x$ such that there is a path in $G_\phi$ from $x$ to $\lnot
           x$ and a path from $\lnot x$ to $x$.
+
+          \begin{solution}
+            Since if $x \rightarrow y$ and $y \rightarrow z$ then $x \rightarrow
+            z$, a path from $x$ to $\lnot x$ is equivalent to $\lnot x \lor
+            \lnot x$. A path from $\lnot x$ to $x$ is equivalent to $x \lor x$.
+
+            This is trivially unsatisfiable.
+
+            \emph{Not sure about reverse implication}
+          \end{solution}
 
         \part Give an algorithm for verifying that a graph $G_\phi$ satisfies
           the property stated in (b) above. What is the complexity of your
           algorithm?
 
+          \begin{solution}
+            Reachability algorithm:
+
+            \begin{enumerate}
+              \item mark node $a$, leaving other nodes unmarked and initialise
+                set $S$ to $\{ a \}$.
+              \item while $S$ is not empty, choose node $i$ in $S$: remove $i$
+                from $S$ and for all $j$ such that there is an edge $(i, j)$ and
+                $j$ is unmarked, mark $j$ and add to $S$.
+              \item if b is marked, accept else reject.
+            \end{enumerate}
+
+            The complexity of the algorithm that determines whether there is a
+            path between two nodes is $\mathcal{O}(V + E)$, since this might
+            need to be computed for each variable, the total complexity is
+            $\mathcal{O}(n \times (2n + 2m))$ = $\mathcal{O}(n^2)$.
+          \end{solution}
+
         \part From (c) deduce that there is a polynomial time algorithm for
           testing whether or not a 2CNF propositional formula is satisfiable.
 
+          \begin{solution}
+            The algorithm in (c) determines whether a 2CNF formula is
+            unsatisfiable, and thus can be used to determine whether it is
+            satisfiable as this is simply the opposite. The running time is
+            polynomial.
+          \end{solution}
+
         \part Why does this idea not work if we have 3 literals per clause?
+
+          \begin{solution}
+            It is no longer possible to convert each clause to a simple
+            implication.
+          \end{solution}
 
       \end{parts}
 
     \question A clause (i.e. a disjunction of literals) is called a \emph{Horn
       clause}, if it contains at most one positive literal. Such a clause can
       be written as an implication: $(x \lor (\lnot y) \lor (\lnot w) \lor
-      (\lnot z))$ is equivalent to $((y \land w \land z) \implies x))$. HORNSAT
-      is the problem of deciding whether a given Boolean expression that is a
-      conjunction of Horn clauses is satisfiable.
+      (\lnot z))$ is equivalent to $((y \land w \land z) \rightarrow x))$.
+      HORNSAT is the problem of deciding whether a given Boolean expression
+      that is a conjunction of Horn clauses is satisfiable.
 
       \begin{parts}
         \part Show that there is a polynomial time algorithm for solving
@@ -93,23 +162,67 @@
           set to true, then the positive one must also be set to true.
           Continue this procedure until a contradiction is reached or a
           satisfying truth assignment is found).}
+
+          \begin{solution}
+            Each clause corresponds to an implication with a conjunction of zero
+            or more positive literals on the left and zero or one positive
+            literals on the right.
+
+            Set all variables to false.
+
+            While there exists a clause, $c$ in $\phi$ that is ${false}$ under
+            the current truth assignment then if the clause has no variables on
+            the right side of the implication then return ``UNSAT'', otherwise
+            set the variable on the right side of the implication to ${true}$.
+          \end{solution}
+
+        \part In the proof of the NP-completeness of SAT it was shown how to
+          construct, for every nondeterministic machine $M$, integer $k$ and
+          string $x$ a Boolean expression $\phi$ which is satisfiable if, and
+          only if, $M$ accepts $x$ within $nk$ steps. Show that, if $M$ is
+          deterministic, then $\phi$ can be chosen to be a conjunction of Horn
+          clauses.
+
+          \begin{solution}
+            \emph{Not sure}
+          \end{solution}
+
       \end{parts}
 
     \question In general \emph{k-colourability} is the problem of deciding,
       given a graph $G = (V,E)$, whether there is a colouring $\mathcal{X} : V
-      \implies {1,\ldots,k}$ of the vertices such that if $(u, v) \in E$, then
-      $\mathcal{X}(u) \neq \mathcal{X}(v)$. That is, adjacent vertices do not
-      have the same colour.
+      \rightarrow {1,\ldots,k}$ of the vertices such that if $(u, v) \in E$,
+      then $\mathcal{X}(u) \neq \mathcal{X}(v)$. That is, adjacent vertices do
+      not have the same colour.
 
       \begin{parts}
         \part Show that there is a polynomial time algorithm for solving
           2-colourability.
+          \begin{solution}
+            To determine whether a graph can be coloured with 2 colours it is
+            sufficient to determine whether the graph contains any odd loops.
+
+            To do this, start at a vertex then travel along the edges, assigning
+            either ``odd'' or ``even'' to each vertex alternately. An odd cycle
+            can be detected if two vertices with the same index are adjacent.
+
+            The running time of this is $\mathcal{O}(V^2)$.
+          \end{solution}
 
         \part Show that, for each $k$, $k$-colourability is reducible to $k +
           1$-colourability.
+          \begin{solution}
+            Construct graph $G'$ from $G$ by adding a new vertex adjacent to all
+            the old vertices, then $G$ is \emph{$k$-colourable} iff $G'$ is
+            \emph{$k+1$-colourable}.
+          \end{solution}
 
           What can you conclude from this about the complexity of
           4-colourability?
+
+          \begin{solution}
+            It is NP-complete, since 3-colourability is.
+          \end{solution}
 
       \end{parts}
 
