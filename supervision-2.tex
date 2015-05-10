@@ -17,7 +17,7 @@
 
         \part[3] Give a precise definition of NP-completeness.
           \begin{solution}
-            A language is NP-HARD if every langauge in NP is polynomial-time
+            A language is NP-HARD if every language in NP is polynomial-time
             reducible to it.
 
             A language is NP-COMPLETE if it is NP-HARD and is in NP.
@@ -222,7 +222,7 @@
             nondeterministic machine that decides $L_2$. Since the running time
             of $f$ is polynomial, the length of $f(x)$ must be polynomial in
             the length of $x$. Since $M$, by definition, is polynomial in the
-            length of its input by composition of ploynomials is also polynomial
+            length of its input by composition of polynomials is also polynomial
             in the length of $x$.
           \end{solution}
 
@@ -262,10 +262,10 @@
               \begin{solution}
                 Consider an instance of the VERTEX COVER decision problem, $(V,
                 E, k)$. From above if there is a vertex cover $X$ then the
-                complement must be an independant set. Since, in this problem,
+                complement must be an independent set. Since, in this problem,
                 we are looking for a vertex cover with $k$ or fewer vertices it
                 is sufficient to show that there is an independent set with
-                atleast $n - k$ vertices (where $n$ is the total number of
+                at least $n - k$ vertices (where $n$ is the total number of
                 vertices). The problem is therefore reduced to INDEPENDENT SET
                 with $n - k$ as the target.
 
