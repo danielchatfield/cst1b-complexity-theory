@@ -1,0 +1,64 @@
+\documentclass{supervision}
+\usepackage{course}
+
+\Supervision{3}
+\begin{document}
+  \begin{questions}
+    \section*{2011 Paper 6 Question 1}
+    \question[20] The following is a quotation from an Internet forum on
+      cryptography.
+
+      \begin{quotation}
+        Cracking RSA is NP-complete so nothing better than brute force is
+        possible.
+      \end{quotation}
+
+      Your task is to evaluate to what extent (if any) this statement is true.
+      For full marks, you will consider the following questions.
+
+      \begin{itemize}
+        \item What would it mean, precisely, for ``cracking RSA'' to be
+          NP-complete? In particular, what is the decision problem involved and
+          what is meant by saying it is NP-complete?
+
+        \item Is the problem, in fact, NP-complete? Why or why not?
+
+        \item What is meant, precisely, by the conclusion, ``nothing better than
+          brute force is possible''?
+
+        \item Assuming the premise is correct, i.e. ``cracking RSA is
+          NP-complete'', does the conclusion follow? Why or why not?
+
+        \item What is the relationship, more generally, between encryption
+          systems and NP-completeness?
+      \end{itemize}
+
+    \section*{2008 Paper 6 Question 12}
+    \question
+      \begin{parts}
+        \part[6] Give definitions for the complexity classes ${SPACE}(f)$ (for
+          any function $f$); $L$ and $NL$.
+
+        \part Consider the following decision problem:
+
+          \begin{description}
+            \item[Reachability] Given a graph $G = (V, E)$ and two distinguished
+              vertices $s, t \in V$, does $G$ contain a path from $s$ to $t$.
+          \end{description}
+          \begin{subparts}
+            \subpart[7] Explain why \emph{Reachability} is in the complexity
+              class ${NL}$.
+
+            \subpart[7] Show that if \emph{Reachability} were in the class $L$,
+              we would have $L = {NL}$.
+          \end{subparts}
+      \end{parts}
+
+    \section*{2006 Paper 5 Question 12}
+    \question[20] Suppose that $f(n)$ is a sensible function (you may like in
+      some part of your answer to comment on what the term ``sensible'' might
+      mean in this context), then show that the class ${DTIME}(f(n))$ is
+      strictly contained in ${DTIME}(f(n)^4)$.
+
+  \end{questions}
+\end{document}
